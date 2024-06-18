@@ -1,11 +1,11 @@
 variable "resource_group_name" {
   type        = string
-  description = "(Required) The name of the Resource Group in which the Linux Virtual Machine should be exist. Changing this forces a new resource to be created."
+  description = "(Required) The name of the Resource Group in which the Windows Virtual Machine should be exist. Changing this forces a new resource to be created."
 }
 
 variable "location" {
   type        = string
-  description = "(Required) The Azure location where the Linux Virtual Machine should exist. Changing this forces a new resource to be created."
+  description = "(Required) The Azure location where the Windows Virtual Machine should exist. Changing this forces a new resource to be created."
 }
 
 variable "suffix" {
@@ -15,12 +15,12 @@ variable "suffix" {
 
 variable "subnet_id" {
   type        = string
-  description = "(Required) The ID of the subnet which the Linux Virtual Machine should attach to."
+  description = "(Required) The ID of the subnet which the Windows Virtual Machine should attach to."
 }
 
 variable "enable_public_ip_address" {
   type        = bool
-  description = "(Optional) Boolean flag to determine whether the Linux Virtual Machine should have a public ip address. Defaults to false. "
+  description = "(Optional) Boolean flag to determine whether the Windows Virtual Machine should have a public ip address. Defaults to false. "
   default     = false
 }
 
@@ -36,10 +36,16 @@ variable "private_ip_address" {
 
 variable "admin_username" {
   type        = string
-  description = "(Required) The username of the local administrator used for the Virtual Machine. Changing this forces a new resource to be created."
+  description = "(Required) The username of the local administrator used for the Windows Virtual Machine. Changing this forces a new resource to be created."
 }
 
 variable "admin_password" {
   type        = string
-  description = "(Required) The Password which should be used for the local-administrator on this Virtual Machine. Changing this forces a new resource to be created."
+  description = "(Required) The Password which should be used for the local-administrator on this Windows Virtual Machine. Changing this forces a new resource to be created."
+}
+
+variable "run_init_script" {
+  type        = bool
+  description = "(Optional) Boolean flag to determine whether the Windows Virtual Machine should run the init script. Defaults to false. "
+  default     = false
 }

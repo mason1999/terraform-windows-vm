@@ -43,3 +43,26 @@ resource "azurerm_windows_virtual_machine" "this" {
     version   = "latest"
   }
 }
+
+data "template_file" "init" {
+  count    = var.run_init_script == true ? 1 : 0
+  template = file("${path.module}/init.ps1")
+  vars = {
+    virtual_machine_name = "${azurerm_windows_virtual_machine.this.name}"
+  }
+}
+
+resource "azurerm_virtual_machine_extension" "this" {
+  count                = var.run_init_script == true ? 1 : 0
+  name                 = "vm_extension_install_iis"
+  virtual_machine_id   = azurerm_windows_virtual_machine.this.id
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.10"
+
+  settings = <<SETTINGS
+{
+  "commandToExecute": "powershell -command \"[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${base64encode(data.template_file.init[0].rendered)}')) | Out-File -filepath init.ps1\" && powershell -ExecutionPolicy Unrestricted -File init.ps1 -virtual_machine_name ${data.template_file.init[0].vars.virtual_machine_name}"
+}
+SETTINGS
+}

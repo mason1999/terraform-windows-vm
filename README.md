@@ -40,5 +40,6 @@ module "linux_vm" {
   private_ip_address            = "10.0.0.4"
   admin_username                = "testuser"
   admin_password                = "WeakPassword123"
+  run_init_script               = true
 }
 ```
