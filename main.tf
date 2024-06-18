@@ -54,7 +54,7 @@ data "template_file" "init" {
 
 resource "azurerm_virtual_machine_extension" "this" {
   count                = var.run_init_script == true ? 1 : 0
-  name                 = "vm_extension_install_iis"
+  name                 = "windows-init-script"
   virtual_machine_id   = azurerm_windows_virtual_machine.this.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
