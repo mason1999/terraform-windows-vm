@@ -28,8 +28,8 @@ module "vnet" {
   }
 }
 
-module "linux_vm" {
-  source = "git::https://github.com/mason1999/terraform-linux-vm"
+module "windows_vm" {
+  source = "git::https://github.com/mason1999/terraform-windows-vm"
 
   resource_group_name           = azurerm_resource_group.this.name
   location                      = azurerm_resource_group.this.location
