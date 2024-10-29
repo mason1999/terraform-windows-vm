@@ -42,6 +42,14 @@ resource "azurerm_windows_virtual_machine" "this" {
     sku       = "2022-datacenter-azure-edition"
     version   = "latest"
   }
+
+  dynamic "identity" {
+    for_each = var.identity == null ? [] : [var.identity]
+    content {
+      type         = identity.value.type
+      identity_ids = identity.value.identity_ids
+    }
+  }
 }
 
 data "template_file" "init" {
